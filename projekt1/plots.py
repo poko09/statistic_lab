@@ -206,5 +206,5 @@ def generate_operation_comp_plots(max_size):
         op_plot_from_k(max_size, l, "Matrix multiplication number of operations with l = {x}".format(x=l))
 
 
-generate_time_comp_plots(5)
-generate_operation_comp_plots(5)
+generate_time_comp_plots(10)
+generate_operation_comp_plots(10)
