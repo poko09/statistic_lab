@@ -1,10 +1,10 @@
 import time
 import numpy as np
 
-
 '''
     All multiplying methods:
 '''
+
 
 def classic_multiplication(matrix1, matrix2):
     result = [[0 for _ in range(len(matrix2[0]))] for _ in range(len(matrix1))]
@@ -57,8 +57,6 @@ def strassen(A, B):
             result[i + mid][j] = C21[i][j]
             result[i + mid][j + mid] = C22[i][j]
 
-
-
     return result
 
 
@@ -108,22 +106,35 @@ def binet(A, B):
 
 
 """
+    Multiplication program:
+"""
+
+
+def matrix_multiplication(A, B, l):
+    if len(A) > 2 ** l:
+        return binet(A, B)
+    else:
+        return classic_multiplication(A, B)
+
+"""
     Helper function:
 """
+
+
 def add(A, B):
     return [[A[i][j] + B[i][j] for j in range(len(A[0]))] for i in range(len(A))]
+
 
 def subtract(A, B):
     return [[A[i][j] - B[i][j] for j in range(len(A[0]))] for i in range(len(A))]
 
 
 def generate_matrix(n):
-    array = np.random.randint(10, size=(n,n))
+    array = np.random.uniform(5, 20, size=(n, n))
     return array
 
 
 if __name__ == '__main__':
-
     matrix1 = generate_matrix(4)
     matrix2 = generate_matrix(4)
 
