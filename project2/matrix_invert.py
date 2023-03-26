@@ -1,7 +1,11 @@
 import numpy as np
+import time
+import warnings
 
-from project2.mat_mul_op_count import matrix_multiplication_operation_count
-from project2.matrix_operations import subtract, matrix_multiplication, add
+from matplotlib import pyplot as plt
+
+from mat_mul_op_count import matrix_multiplication_operation_count
+from matrix_operations import subtract, matrix_multiplication, add, generate_matrix
 
 def identity(n):
     return np.identity(n)
@@ -94,8 +98,55 @@ def invert_matrix_op_count(A, l):
     return op_count
 
 
+def calculate_time_of_inverting(list_of_matrix):
+    time_list = []
+    for i in range(len(list_of_matrix)):
+        start = time.time()
+        inverse_matrix(list_of_matrix[i], 0)
+        end = time.time()
+        result = round(end-start, 4)
+        time_list.append(result)
+    return(time_list)
+
+
+def calculate_number_of_operations(list_of_matrix):
+    num_of_operations = []
+    for i in range(len(list_of_matrix)):
+        num = invert_matrix_op_count(list_of_matrix[i],1)
+        num_of_operations.append(num)
+    return num_of_operations
+
+
+def generate_many_matrix():
+    list_of_matrix = []
+    for i in range(2, 9, 1):
+        my_matrix = generate_matrix(2**i)
+        list_of_matrix.append(my_matrix)
+        warnings.filterwarnings('ignore')
+    return list_of_matrix
+
+
+def draw_chart(points, title_name, y_axis_name):
+    x_axis_list = []
+    x = 2
+    for i in range(len(points)):
+        x_axis_list.append(x)
+        x +=1
+    plt.plot(x_axis_list, points, marker='o')
+    plt.title(title_name)
+    plt.ylabel(y_axis_name)
+    plt.xlabel('rozmiar macierzy 2^n x 2^n')
+    plt.show()
+
 if __name__ == '__main__':
-    M = np.array([[1, 2, 7, 2], [1, 1, 3, 3], [4, 0, 1, 0], [4, 5, 6, 4]])
-    print((-1) * M)
-    print(inverse_matrix(M, 4))
-    print(invert_matrix_op_count(M, 4))
+    my_list = generate_many_matrix()
+    # my_time_list = calculate_time_of_inverting(my_list)
+    my_operation_list = calculate_number_of_operations(my_list)
+
+    # draw_chart(my_time_list, "Wykres ze względu na czas", "czas [s]")
+    draw_chart(my_operation_list, "Wykres ze względu na liczbę operacji", "liczba operacji")
+    print(my_operation_list)
+
+
+
+

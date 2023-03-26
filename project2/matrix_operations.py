@@ -94,7 +94,7 @@ def subtract(A, B):
 
 
 def generate_matrix(n):
-    array = np.random.uniform(5, 20, size=(n, n))
+    array = np.random.randint(0, 9, size=(n, n))
     return array
 
 
